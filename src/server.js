@@ -9,7 +9,9 @@ const cors = require('cors');
 app.use(cors);
 
 io.on('connection', socket => {
-    console.log('ok');
+    socket.on('connect',box => {
+        socket.join(box);
+    });
 });
 
 mongoose.connect('mongodb+srv://atilarampazo:ztascani1978@rocketstack-zxayo.mongodb.net/test?retryWrites=true',
@@ -17,7 +19,7 @@ mongoose.connect('mongodb+srv://atilarampazo:ztascani1978@rocketstack-zxayo.mong
     useNewUrlParser: true
 });
 /* Deixando todo o io disponivel para toda a aplicação! */
-app.use(req,res , next => {
+app.use((req,res, next) => {
     req.io = io;
     return next();
 });
