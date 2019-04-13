@@ -8,10 +8,14 @@ const cors = require('cors');
 
 app.use(cors());
 
-io.on('connection', socket => {
-    socket.on('connect',box => {
-        socket.join(box);
-    });
+
+
+
+io.on("connection", socket => {
+  socket.on('connectRoom', box => {
+    socket.join(box);
+  })
+
 });
 
 mongoose.connect('mongodb+srv://atilarampazo:ztascani1978@rocketstack-zxayo.mongodb.net/test?retryWrites=true',
