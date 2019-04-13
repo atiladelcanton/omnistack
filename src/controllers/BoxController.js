@@ -6,8 +6,8 @@ class BoxController{
         const box = await Box.create({
             title:req.body.title
         });
-
-        return res.json(box);
+        req.io.sockets.in('atilarampazo_097470428').emit('box',box);
+        return res.status(201).json(box);
     }
 
     async show(req,res){
@@ -21,6 +21,12 @@ class BoxController{
         });
 
         return res.json(box);
+    }
+
+    async listAll(req,res){
+        const boxes = await Box.find(null,{title:1,createdAt:1}).sort({title:-1,createdAt:-1});
+
+        return res.status(200).json(boxes);
     }
 }
 
